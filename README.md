@@ -1,2 +1,2 @@
-RoboGorM
-robocode game (my bot)
+RoboGroM bot.
+Robocode game.

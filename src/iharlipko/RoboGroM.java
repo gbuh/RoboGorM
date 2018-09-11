@@ -1,20 +1,25 @@
-package igorlipko;
+package iharlipko;
 
-import robocode.*;
+import robocode.AdvancedRobot;
+import robocode.RobotDeathEvent;
+import robocode.ScannedRobotEvent;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.Point2D;
 
 /**
- * RoboGorM - a Melee and 1v1 bot
-
- * @version 1.0 12 Apr 2018
- * @author  Igor Lipko
+ * RoboGroM - a Melee and 1v1 bot.
+ * 
+ * @version 1.1
+ * 
+ * Date: Sep 10, 2018
+ * 
+ * @author Ihar_Lipko
  */
-public class RoboGorM extends AdvancedRobot {
-    private static Bearing bear;
-    private static Gun gun;
-    private static Evaluate eval;
+public class RoboGroM extends AdvancedRobot {
+    private Bearing bear;
+    private Gun gun;
+    private Evaluate eval;
 
     public void run() {
         try {
@@ -24,24 +29,29 @@ public class RoboGorM extends AdvancedRobot {
             setAdjustGunForRobotTurn(true);
             setAdjustRadarForGunTurn(true);
             setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
-            // Add my execute methods
+            // Executable methods
             do {
                 bear.myPosition = new Point2D.Double(getX(), getY());
                 gun.myEnergy = getEnergy();
-                // I wait until will be scanned all other robots
+                // Waiting until will be scanned all other robots
                 // (time around 7 to 9 ticks).
                 if (eval.target.live && getTime() > 9) {
                     bear.doMovement(eval.target);
                     gun.doGunFire(eval.target);
                 }
                 execute();
+                // Check for new targets.
+                // Only necessary for Narrow Lock because sometimes our radar is already
+                // pointed at the enemy and our onScannedRobot code doesn't end up telling
+                // it to turn, so the system doesn't automatically call scan() for us
+                scan();
             } while (true);
         } catch (RuntimeException re) {
             System.out.println(re);
         }
     }
 
-    // Initialization process for my data structure
+    // Robot elements initialization process
     private void initComponents() {
         if (bear == null) {
             bear = new Bearing(this);
@@ -54,12 +64,12 @@ public class RoboGorM extends AdvancedRobot {
         }
     }
 
-    // Fancy colors for my robot
+    // Robot colors settings
     private void initColors() {
         setColors(Color.green, Color.green, Color.black);
     }
 
-    // When I scan an opponent do evaluating
+    // When an opponent was scanned evaluating begin
     public void onScannedRobot(ScannedRobotEvent e) {
         try {
             eval.onScannedRobot(e);
@@ -68,7 +78,7 @@ public class RoboGorM extends AdvancedRobot {
         }
     }
 
-    // When some robot has died, I note the information about it
+    // When some robot has died, note the information about it
     public void onRobotDeath(RobotDeathEvent e) {
         try {
             eval.onRobotDeath(e);

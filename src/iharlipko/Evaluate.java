@@ -1,4 +1,4 @@
-package igorlipko;
+package iharlipko;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -6,23 +6,26 @@ import java.util.Map;
 
 import robocode.RobotDeathEvent;
 import robocode.ScannedRobotEvent;
+import robocode.util.Utils;
 
 /**
- * RoboGorM - Evaluate class
- * Evaluate RoboGorM game state
+ * RoboGroM - Evaluate class Evaluate RoboGroM game state.
  * 
- * @version 1.0 12 Apr 2018
- * @author  Igor Lipko
+ * @version 1.1
+ * 
+ * Date: Sep 10, 2018
+ * 
+ * @author Ihar_Lipko
  */
 public class Evaluate {
-    private RoboGorM bot;
+    private RoboGroM bot;
     protected Point2D.Double lastPosition;
     protected Point2D.Double myPosition;
     protected Enemy target;
     protected HashMap<String, Enemy> enemies;
-    double addLast;
+    protected double addLast;
 
-    public Evaluate(RoboGorM bot) {
+    public Evaluate(RoboGroM bot) {
         this.bot = bot;
         myPosition = new Point2D.Double(bot.getX(), bot.getY());
         lastPosition = myPosition;
@@ -32,8 +35,8 @@ public class Evaluate {
     }
 
     public double evaluate(Point2D.Double p, double addLast) {
-        // This is basically here that the robot uses more space on the
-        // battlefield. In melee it is dangerous to stay somewhere too long.
+        // Robot uses more space on the battlefield.
+        // In melee it is dangerous to stay somewhere too long.
         double eval = addLast * 0.08 / p.distanceSq(lastPosition);
 
         for (Map.Entry<String, Enemy> enemy : enemies.entrySet()) {
@@ -62,19 +65,25 @@ public class Evaluate {
         en.position = Calculate.calcPoint(myPosition, e.getDistance(),
                 bot.getHeadingRadians() + e.getBearingRadians());
 
-        // Target selection: the one closer to you is the most dangerous
-        // so attack him
+        // Target selection: the one closer to you is the most dangerous so attack him
         if (!target.live || e.getDistance() < myPosition.distance(target.position)) {
             target = en;
         }
 
-        // I locks the radar if there is only one opponent left
-        if (bot.getOthers() == 1)
-            bot.setTurnRadarLeftRadians(bot.getRadarTurnRemainingRadians());
+        // Locks the radar if there is only one opponent left
+        if (bot.getOthers() == 1) {
+            double radarTurn =
+                    // Absolute bearing to target
+                    bot.getHeadingRadians() + e.getBearingRadians()
+                    // Subtract current radar heading to get turn required
+                            - bot.getRadarHeadingRadians();
+
+            bot.setTurnRadarRightRadians(1.9 * Utils.normalRelativeAngle(radarTurn));
+        }
     }
 
     // Change flag for robot death
     public void onRobotDeath(RobotDeathEvent e) {
-            ((Enemy)enemies.get(e.getName())).live = false;
-        }
+        ((Enemy) enemies.get(e.getName())).live = false;
+    }
 }

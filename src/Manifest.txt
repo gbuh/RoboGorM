@@ -1,1 +1,1 @@
-Main-class: igorlipko.RoboGorM
+Main-class: iharlipko.RoboGroM

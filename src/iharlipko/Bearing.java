@@ -1,28 +1,27 @@
-package igorlipko;
+package iharlipko;
 
 import robocode.util.Utils;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import igorlipko.Enemy;
-import igorlipko.Calculate;
-
 /**
- * RoboGorM - Bearing class
- * RoboGorM movement
+ * RoboGroM - Bearing class (RoboGroM movement).
  * 
- * @version 1.0 12 Apr 2018
- * @author  Igor Lipko
+ * @version 1.1
+ * 
+ * Date: Sep 10, 2018
+ * 
+ * @author Ihar_Lipko
  */
 public class Bearing {
-    private RoboGorM bot;
+    private RoboGroM bot;
     protected Point2D.Double nextDestination;
     protected Point2D.Double lastPosition;
     protected Point2D.Double myPosition;
-    double addLast;
+    protected double addLast;
 
-    public Bearing(RoboGorM bot) {
+    public Bearing(RoboGroM bot) {
         this.bot = bot;
         nextDestination = new Point2D.Double(bot.getX(), bot.getY());
         lastPosition = nextDestination;
@@ -33,11 +32,11 @@ public class Bearing {
         double distanceToTarget = myPosition.distance(target.position);
         double distanceToNextDestination = myPosition.distance(nextDestination);
 
-        // Search a new destination if I reached this one
+        // Search a new destination point
         if (distanceToNextDestination < 15) {
 
             // Formula to increase 1-v-1 performance.
-            // With more robot saddLast will mostly be 1
+            // With more robots addLast will mostly be 1
             addLast = 1 - Math.rint(Math.pow(Math.random(), bot.getOthers()));
 
             Rectangle2D.Double battleField = new Rectangle2D.Double(30, 30,
