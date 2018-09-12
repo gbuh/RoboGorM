@@ -10,9 +10,9 @@ import java.awt.geom.Point2D;
 /**
  * RoboGroM - a Melee and 1v1 bot.
  * 
- * @version 1.1
+ * @version 1.2
  * 
- * Date: Sep 10, 2018
+ * Date: Sep 12, 2018
  * 
  * @author Ihar_Lipko
  */
@@ -70,18 +70,18 @@ public class RoboGroM extends AdvancedRobot {
     }
 
     // When an opponent was scanned evaluating begin
-    public void onScannedRobot(ScannedRobotEvent e) {
+    public void onScannedRobot(ScannedRobotEvent event) {
         try {
-            eval.onScannedRobot(e);
+            eval.onScannedRobot(event);
         } catch (RuntimeException re) {
             System.out.println(re);
         }
     }
 
     // When some robot has died, note the information about it
-    public void onRobotDeath(RobotDeathEvent e) {
+    public void onRobotDeath(RobotDeathEvent event) {
         try {
-            eval.onRobotDeath(e);
+            eval.onRobotDeath(event);
         } catch (RuntimeException re) {
             System.out.println(re);
         }

@@ -6,9 +6,9 @@ import java.awt.geom.Point2D;
  * RoboGroM - Calculate class. Calculate points and angles for RoboGorM current or last position,
  * destination points, etc
  * 
- * @version 1.1
+ * @version 1.2
  * 
- * Date: Sep 10, 2018
+ * Date: Sep 12, 2018
  * 
  * @author Ihar_Lipko
  */
