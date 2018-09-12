@@ -19,7 +19,7 @@ public class Bearing {
     protected Point2D.Double nextDestination;
     protected Point2D.Double lastPosition;
     protected Point2D.Double myPosition;
-    protected double addLast;
+//    protected double addLast;
 
     public Bearing(RoboGroM bot) {
         this.bot = bot;
@@ -37,7 +37,7 @@ public class Bearing {
 
             // Formula to increase 1-v-1 performance.
             // With more robots addLast will mostly be 1
-            addLast = 1 - Math.rint(Math.pow(Math.random(), bot.getOthers()));
+//            addLast = 1 - Math.rint(Math.pow(Math.random(), bot.getOthers()));
 
             Rectangle2D.Double battleField = new Rectangle2D.Double(30, 30,
                     bot.getBattleFieldWidth() - 60,

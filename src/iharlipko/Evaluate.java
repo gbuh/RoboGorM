@@ -1,12 +1,11 @@
 package iharlipko;
 
-import java.awt.geom.Point2D;
-import java.util.HashMap;
-import java.util.Map;
-
 import robocode.RobotDeathEvent;
 import robocode.ScannedRobotEvent;
 import robocode.util.Utils;
+
+import java.awt.geom.Point2D;
+import java.util.HashMap;
 
 /**
  * RoboGroM - Evaluate class Evaluate RoboGroM game state.
@@ -23,7 +22,7 @@ public class Evaluate {
     protected Point2D.Double myPosition;
     protected Enemy target;
     protected HashMap<String, Enemy> enemies;
-    protected double addLast;
+//    protected double addLast;
 
     public Evaluate(RoboGroM bot) {
         this.bot = bot;
@@ -31,9 +30,9 @@ public class Evaluate {
         lastPosition = myPosition;
         target = new Enemy();
         enemies = new HashMap<>();
-        addLast = 1 - Math.rint(Math.pow(Math.random(), bot.getOthers()));
+//        addLast = 1 - Math.rint(Math.pow(Math.random(), bot.getOthers()));
     }
-
+/*
     public double evaluate(Point2D.Double p, double addLast) {
         // Robot uses more space on the battlefield.
         // In melee it is dangerous to stay somewhere too long.
@@ -51,7 +50,7 @@ public class Evaluate {
         }
         return eval;
     }
-
+*/
     public void onScannedRobot(ScannedRobotEvent e) {
         Enemy en = (Enemy) enemies.get(e.getName());
 
